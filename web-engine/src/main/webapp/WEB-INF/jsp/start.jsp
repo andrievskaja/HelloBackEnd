@@ -20,8 +20,8 @@
                 </tr>
             </c:forEach>
         </table>
-        <a href="<c:url value="/hello/contacts?nameFilter=^A.*$"/>">Без буквы А</a>
- 
+        <a href="<c:url value="/hello/contacts?nameFilter=^(?!A).*$"/>">Без буквы А</a>
 
+        ${message}
     </body>
 </html>

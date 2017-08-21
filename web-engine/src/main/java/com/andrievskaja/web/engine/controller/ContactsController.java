@@ -7,11 +7,14 @@ package com.andrievskaja.web.engine.controller;
 
 import com.andrievskaja.business.service.ContactsService;
 import com.google.gson.Gson;
+import java.util.regex.PatternSyntaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -34,5 +37,11 @@ public class ContactsController {
     public String getContacts(@RequestParam String nameFilter) {
         String contacts = new Gson().toJson(contactsService.listContactsSort(nameFilter));  
         return contacts;
+    }
+     @ExceptionHandler(PatternSyntaxException.class)
+    public ModelAndView paymentError(PatternSyntaxException bse) {
+        ModelAndView mav = new ModelAndView("start");
+        mav.addObject("message", bse.getMessage());
+        return mav;
     }
 }

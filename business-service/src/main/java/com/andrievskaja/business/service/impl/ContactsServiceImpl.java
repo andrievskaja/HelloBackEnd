@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("contactsService")
 public class ContactsServiceImpl implements ContactsService {
+
     private final ModelMapper mapper = new ModelMapper();
     /**
      *
@@ -26,12 +28,13 @@ public class ContactsServiceImpl implements ContactsService {
      */
     @Autowired
     private ContactRepository contactRepository;
+
     /**
      *
      * test initialization database Mysql
-     * @return 
+     *
+     * @return
      */
-   
     public List<Contact> testListContacts() {
         List<Contact> contact = new ArrayList<>();
         contact.add(new Contact(1, "Ivan"));
@@ -46,6 +49,7 @@ public class ContactsServiceImpl implements ContactsService {
         contact.add(new Contact(10, "Vasja"));
         return contact;
     }
+
     /**
      *
      * @param reg
@@ -54,29 +58,56 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     @Transactional(readOnly = true)
     public List<ContactView> listContactsSort(String reg) {
-//        List<Contact> contacts = contactRepository.findAll();Will return all records from Mysql
+        List<Contact> contacts = contactRepository.findAll();
         List<ContactView> contactsView = new ArrayList<>();
+        if (contacts == null) {
+            return null;
+        }
         Pattern p = Pattern.compile(reg);
-        testListContacts().stream().forEach((contact) -> {
+        isRegex(reg);
+        contacts.stream().forEach((contact) -> {
             Matcher m = p.matcher(contact.getName());
-            if (!m.matches()) {
+            if (m.matches()) {
                 contactsView.add(mapper.map(contact, ContactView.class));
             }
         });
         return contactsView;
+
     }
+
+    public boolean isRegex(final String str) {
+        try {
+            Pattern.compile(str);
+            return true;
+        } catch (PatternSyntaxException e) {
+            throw new PatternSyntaxException("PatternSyntaxException",str,1); 
+        }
+    }
+
     /**
      *
      * @return all contacts
      */
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<ContactView> listContacts() {
+////        List<Contact> contacts = contactRepository.findAll(); - Will return all records from Mysql
+//        List<ContactView> contactsView = new ArrayList<>();
+//        testListContacts().stream().forEach((contact) -> {
+//            contactsView.add(mapper.map(contact, ContactView.class));
+//        });
+//        return contactsView;
+//    }
     @Override
     @Transactional(readOnly = true)
     public List<ContactView> listContacts() {
-//        List<Contact> contacts = contactRepository.findAll(); - Will return all records from Mysql
+        List<Contact> contacts = contactRepository.findAll();
         List<ContactView> contactsView = new ArrayList<>();
-        testListContacts().stream().forEach((contact) -> {
-            contactsView.add(mapper.map(contact, ContactView.class));
-        });
+        contacts
+                .stream().forEach((contact) -> {
+                    contactsView.add(mapper.map(contact, ContactView.class
+                    ));
+                });
         return contactsView;
     }
 }

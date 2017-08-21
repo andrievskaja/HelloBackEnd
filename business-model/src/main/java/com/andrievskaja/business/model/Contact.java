@@ -20,6 +20,8 @@ public class Contact implements Serializable {
 
     private Integer id;
     private String name;
+    private String namekk;
+    
 
     public Contact() {
     }
@@ -41,4 +43,13 @@ public class Contact implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getNamekk() {
+        return namekk;
+    }
+
+    public void setNamekk(String namekk) {
+        this.namekk = namekk;
+    }
+    
 }
