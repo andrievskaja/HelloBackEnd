@@ -5,43 +5,61 @@
  */
 package com.andrievskaja.web.engine.controller;
 
-import com.andrievskaja.business.service.ContactsService;
-import com.google.gson.Gson;
-import java.util.regex.PatternSyntaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+import com.andrievskaja.business.service.TaskService;
+import com.andrievskaja.business.service.exception.TaskDeleteException;
+import com.andrievskaja.business.service.model.form.TaskForm;
+import com.andrievskaja.business.service.model.view.TaskView;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 /**
  *
  * @author Людмила
  */
 @Controller
-@RequestMapping("/hello")
+@RequestMapping("/task")
 public class ContactsController {
 
     @Autowired
-    private ContactsService contactsService;
+    private TaskService contactsService;
+
     /**
      *
      * @author nameFilter
-     * @param nameFilter regular expression
-     * @return Gson
+     * @param form
+     * @param result
+     * @return
+     *
      */
     @ResponseBody
-    @RequestMapping("/contacts")
-    public String getContacts(@RequestParam String nameFilter) {
-        String contacts = new Gson().toJson(contactsService.listContactsSort(nameFilter));  
-        return contacts;
+    @RequestMapping("/add")
+    public TaskView add(@Valid TaskForm form, BindingResult result) {
+        return contactsService.add(form);
     }
-     @ExceptionHandler(PatternSyntaxException.class)
-    public ModelAndView paymentError(PatternSyntaxException bse) {
-        ModelAndView mav = new ModelAndView("start");
-        mav.addObject("message", bse.getMessage());
-        return mav;
+    @ResponseBody
+    @RequestMapping("/edit")
+    public TaskView edit(@Valid TaskForm form, BindingResult result) throws TaskDeleteException {
+        return contactsService.edit(form);
+    }
+
+    @ResponseBody
+    @RequestMapping("/delete")
+    public String delete(Long id) {
+        try {
+            contactsService.delete(id);
+        } catch (TaskDeleteException ex) {
+            return ex.getCode().toString();
+        }
+        return "ok";
+    }
+
+    @RequestMapping("/changeStatus")
+    public void checkboxTask(boolean status, Long id) throws TaskDeleteException {
+        contactsService.changeStatus(id);
+
     }
 }

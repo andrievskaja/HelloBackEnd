@@ -5,7 +5,7 @@
  */
 package com.andrievskaja.dao;
 
-import com.andrievskaja.business.model.Contact;
+import com.andrievskaja.business.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author Людмила
  */
-@Repository("contactRepository")
-public interface ContactRepository extends JpaRepository<Contact, Long>, JpaSpecificationExecutor<Contact>{
+@Repository("taskRepository")
+public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificationExecutor<Task>{
     
 }

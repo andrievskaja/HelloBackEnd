@@ -5,11 +5,11 @@
  */
 package com.andrievskaja.web.engine.controller;
 
-import com.andrievskaja.business.service.ContactsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.andrievskaja.business.service.TaskService;
 
 /**
  *
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StartController {
 
     @Autowired
-    private ContactsService contactsService;
+    private TaskService service;
 
     @RequestMapping("/")
     public String startPage(Model model) {
-        model.addAttribute("contacts", contactsService.listContacts()); 
+        model.addAttribute("tasks", service.getAll());
         return "/start";
     }
 }

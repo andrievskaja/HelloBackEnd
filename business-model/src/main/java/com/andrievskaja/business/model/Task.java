@@ -16,40 +16,44 @@ import javax.persistence.Id;
  * @author Людмила
  */
 @Entity
-public class Contact implements Serializable {
+public class Task implements Serializable {
 
-    private Integer id;
-    private String name;
-    private String namekk;
+    private Long id;
+    private String task;
+    private boolean done= false;
     
 
-    public Contact() {
+    public Task() {
     }
-    public Contact(Integer id, String name) {
+    public Task(Long id, String task) {
         this.id = id;
-        this.name = name;
+        this.task = task;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+
+    public String getTask() {
+        return task;
     }
 
-    public String getNamekk() {
-        return namekk;
+    public void setTask(String task) {
+        this.task = task;
     }
 
-    public void setNamekk(String namekk) {
-        this.namekk = namekk;
+    public boolean isDone() {
+        return done;
     }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+
     
 }
