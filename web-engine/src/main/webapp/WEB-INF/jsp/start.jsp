@@ -99,8 +99,11 @@
                                     var posting = $.post(formURL, $('#modal-window-form').serialize());
                                     posting.done(function (data) {
                                         console.log(data);
-                                        $('#task-' + data.id + '').html(data.task);
+                                        console.log($('#task-' + data.id + '').length);
+                                        $('#task-' + data.id).html(data.task);
+//                                        $('#task-' + data.id + '').html(data.task);
                                         console.log('task-' + data.id + '');
+                                        console.log(data.task);
 //                                        $('#task-3').html("7777777");
                                     });
                                 });
@@ -111,10 +114,8 @@
                                         }
                                     });
                                 };
-                                $("#save-button").on('click', function (e) {
-                                    event.preventDefault();
-                                    var form = $(this);
-                                    //                var formData = new FormData($form[1]);
+                                  $(document).on('click','#save-button', function (e) {
+                                    e.preventDefault();
                                     var formURL = "<c:url value="/task/add"/>";
 
                                     var posting = $.post(formURL, $('#save-form').serialize());
@@ -122,7 +123,7 @@
                                         console.log(data);
                                         $('#task-table tr:last').after('<tr id="' + data.id + '">\n\
     <td><input type="checkbox"  id="' + data.id + '"></td>\n\
-    <td>' + data.task + '</td>\n\
+    <td id="task-' + data.id+'">' + data.task + '</td>\n\
     \n\
     <td  id="edit-' + data.id+'"><a href="#" class="btn-lg" \n\
 data-toggle="modal" data-target="#myModal"  data-id="' + data.id + '"> Edit </a></td>\n\
