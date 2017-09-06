@@ -5,7 +5,8 @@
  */
 package com.andrievskaja.dao;
 
-import com.andrievskaja.business.model.Task;
+import com.andrievskaja.business.model.User;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -14,8 +15,11 @@ import org.springframework.stereotype.Repository;
  *
  * @author Людмила
  */
-@Repository("taskRepository")
-public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificationExecutor<Task> {
+@Repository("userRepository")
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    Task findByIdAndTodoListId(Long id, Long todoListId);
+    List<User> findById(Long id);
+
+    User findByLogin(String login);
+
 }

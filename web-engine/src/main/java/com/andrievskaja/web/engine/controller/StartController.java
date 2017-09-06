@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.andrievskaja.business.service.TaskService;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -25,6 +26,11 @@ public class StartController {
     @RequestMapping("/")
     public String startPage(Model model) {
         model.addAttribute("tasks", service.getAll());
-        return "/start";
+        return "/login";
+    }
+
+    @RequestMapping(value ="/register", method = RequestMethod.GET)
+    public String register(Model model) {
+        return "/register";
     }
 }

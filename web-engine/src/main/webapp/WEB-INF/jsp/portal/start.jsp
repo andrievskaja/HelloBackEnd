@@ -37,7 +37,7 @@
                     <th style="width: 10%"></th>
 
                     <th style="width: 10%"></th>
-                </tr><!-- Table Header -->
+                </tr>
                 <c:forEach var="task" items="${tasks}">
                     <tr id="${task.id}">
                         <td id="${task.id}">
@@ -106,9 +106,6 @@
                                         console.log($('#task-' + data.id + '').length);
                                         $('#task-' + data.id).html(data.task);
 //                                        $('#task-' + data.id + '').html(data.task);
-                                        console.log('task-' + data.id + '');
-                                        console.log(data.task);
-//                                        $('#task-3').html("7777777");
                                     });
                                 });
                                 var deleteTask = function (id) {

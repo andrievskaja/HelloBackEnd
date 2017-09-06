@@ -1,12 +1,14 @@
 package com.andrievskaja.business.service.impl;
 
 import com.andrievskaja.business.model.Task;
+import com.andrievskaja.business.model.TodoList;
 import com.andrievskaja.business.service.TaskService;
 import com.andrievskaja.business.service.exception.FaultCode;
 import com.andrievskaja.business.service.exception.TaskDeleteException;
 import com.andrievskaja.business.service.model.form.TaskForm;
 import com.andrievskaja.business.service.model.view.TaskView;
 import com.andrievskaja.dao.TaskRepository;
+import com.andrievskaja.dao.TodoListRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,12 +34,21 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private TodoListRepository todoListRepository;
 
     @Transactional
     @Override
     public TaskView add(TaskForm form) {
-        Task tack = taskRepository.save(mapper.map(form, Task.class));
-        return mapper.map(tack, TaskView.class);
+        TodoList todoList = todoListRepository.findByIdAndUserId(form.getTodoListId(), form.getUserId());
+        if (todoList == null) {
+            return null;
+        }
+        Task task = new Task();
+        mapper.map(form, task);
+        task.setTodoList(todoList);
+        task = taskRepository.save(task);
+        return mapper.map(task, TaskView.class);
     }
 
     @Transactional(readOnly = true)
@@ -60,8 +71,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public void delete(Long id) throws TaskDeleteException {
-        Task task = taskRepository.findOne(id);
+    public void delete(Long id, Long idTodo, Long userId) throws TaskDeleteException {
+        Task task = taskRepository.findByIdAndTodoListId(id, idTodo);
         if (task == null) {
             throw new TaskDeleteException(FaultCode.TASK_NOT_DELETE);
         }

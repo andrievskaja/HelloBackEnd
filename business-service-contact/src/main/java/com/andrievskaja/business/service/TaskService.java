@@ -17,7 +17,7 @@ public interface TaskService {
 
     public List<TaskView> getAll();
 
-    public void delete(Long id) throws TaskDeleteException;
+    public void delete(Long id, Long idTodo,Long userId) throws TaskDeleteException;
 
     public TaskView edit(TaskForm form) throws TaskDeleteException ;
 

@@ -18,6 +18,6 @@
 
 
 
-    <mockito:mock id="contactRepository"
-                  class="com.andrievskaja.dao.ContactRepository" />
+    <mockito:mock id="taskRepository"
+                  class="com.andrievskaja.dao.TaskRepository" />
 </beans>

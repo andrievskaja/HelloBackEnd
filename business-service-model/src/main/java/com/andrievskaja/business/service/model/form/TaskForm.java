@@ -14,6 +14,8 @@ public class TaskForm {
     private Long id;
     private String task;
     private boolean done;
+    private Long todoListId;
+    private Long userId;
 
     public TaskForm() {
     }
@@ -52,4 +54,21 @@ public class TaskForm {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    public Long getTodoListId() {
+        return todoListId;
+    }
+
+    public void setTodoListId(Long todoListId) {
+        this.todoListId = todoListId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+    
 }

@@ -14,12 +14,14 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
        ">
     <import resource="classpath*:context.xml"/>
+    <!--<import resource="security-context.xml"/>-->
     <context:property-placeholder location="classpath*:service.properties"/>
-    
+ 
 
     <context:component-scan base-package="com.andrievskaja.web.engine.controller"/>
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/font/**" location="/font/"/>
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" p:contentType="text/html; charset=UTF-8"/>

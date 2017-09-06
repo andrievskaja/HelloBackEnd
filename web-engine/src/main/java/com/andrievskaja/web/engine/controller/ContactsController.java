@@ -5,6 +5,7 @@
  */
 package com.andrievskaja.web.engine.controller;
 
+import com.andrievskaja.business.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,10 @@ import com.andrievskaja.business.service.TaskService;
 import com.andrievskaja.business.service.exception.TaskDeleteException;
 import com.andrievskaja.business.service.model.form.TaskForm;
 import com.andrievskaja.business.service.model.view.TaskView;
+import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 
 /**
@@ -32,30 +36,25 @@ public class ContactsController {
      * @author nameFilter
      * @param form
      * @param result
+     * @param request
+     * @param userProfile
      * @return
      *
      */
     @ResponseBody
     @RequestMapping("/add")
-    public TaskView add(@Valid TaskForm form, BindingResult result) {
+    public TaskView add(@Valid TaskForm form, BindingResult result, HttpServletRequest request, Principal userProfile) {
+        UserProfile user = (UserProfile) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        form.setUserId(user.getUserId());
         return contactsService.add(form);
     }
+
     @ResponseBody
     @RequestMapping("/edit")
     public TaskView edit(@Valid TaskForm form, BindingResult result) throws TaskDeleteException {
         return contactsService.edit(form);
     }
 
-    @ResponseBody
-    @RequestMapping("/delete")
-    public String delete(Long id) {
-        try {
-            contactsService.delete(id);
-        } catch (TaskDeleteException ex) {
-            return ex.getCode().toString();
-        }
-        return "ok";
-    }
 
     @RequestMapping("/changeStatus")
     public void checkboxTask(boolean status, Long id) throws TaskDeleteException {
