@@ -9,15 +9,8 @@ import com.andrievskaja.business.service.model.form.TaskForm;
 import com.andrievskaja.business.service.model.view.TaskView;
 import com.andrievskaja.dao.TaskRepository;
 import com.andrievskaja.dao.TodoListRepository;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +30,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TodoListRepository todoListRepository;
 
+    /*
+    Add new task in TaskTable
+     */
     @Transactional
     @Override
     public TaskView add(TaskForm form) {
@@ -69,6 +65,9 @@ public class TaskServiceImpl implements TaskService {
         return mapper.map(task, TaskView.class);
     }
 
+    /*
+    Delete the Task  from TaskTable 
+     */
     @Transactional
     @Override
     public void delete(Long id, Long idTodo, Long userId) throws TaskDeleteException {
@@ -79,6 +78,9 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.delete(task);
     }
 
+    /*
+    Edit  task in TaskTable
+     */
     @Transactional
     @Override
     public TaskView edit(TaskForm form) throws TaskDeleteException {
@@ -90,7 +92,9 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(task);
         return mapper.map(task, TaskView.class);
     }
-
+    /*
+    Execution status the Task in TaskTable
+     */
     @Transactional
     @Override
     public void changeStatus(Long id) throws TaskDeleteException {

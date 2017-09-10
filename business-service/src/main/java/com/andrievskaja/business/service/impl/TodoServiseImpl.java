@@ -41,6 +41,9 @@ public class TodoServiseImpl implements TodoServise {
     @Autowired
     private UserRepository userRepository;
 
+    /*
+    Find the TodoTables by authorization the user 
+     */
     @Override
     @Transactional
     public List<TodoListView> findAll(Long userId) {
@@ -52,17 +55,21 @@ public class TodoServiseImpl implements TodoServise {
         });
         return todoListView;
     }
-
+  /*
+    Add new TodoTables. Find user by id and add his to TodoList
+     */
     @Override
     @Transactional
     public TodoListView add(Long userId) {
         User user = userRepository.findOne(userId);
         TodoList todoList = new TodoList();
-        todoList.setUser(user); 
+        todoList.setUser(user);
         todoListRepository.save(todoList);
         return mapper.map(todoList, TodoListView.class);
     }
-
+  /*
+    Edit the TaskTable. Find todoList by todoListId and userId
+     */
     @Override
     @Transactional
     public TodoListView edit(TodoListForm todoListForm) {
@@ -74,7 +81,9 @@ public class TodoServiseImpl implements TodoServise {
         todoListRepository.save(todoList);
         return mapper.map(todoList, TodoListView.class);
     }
-
+  /*
+    Delete the TaskTable. Find todoList by todoListId and userId
+     */
     @Override
     @Transactional
     public boolean delete(Long todoListId, Long userId) {

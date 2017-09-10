@@ -11,16 +11,28 @@ import java.util.List;
  */
 public interface TaskService {
 
+    /*
+    Add new task in TaskTable
+     */
     public TaskView add(TaskForm form);
 
     public TaskView get(long id);
 
     public List<TaskView> getAll();
 
-    public void delete(Long id, Long idTodo,Long userId) throws TaskDeleteException;
+    /*
+    Delete  task in TaskTable
+     */
+    public void delete(Long id, Long idTodo, Long userId) throws TaskDeleteException;
 
-    public TaskView edit(TaskForm form) throws TaskDeleteException ;
+    /*
+    Edit  task in TaskTable
+     */
+    public TaskView edit(TaskForm form) throws TaskDeleteException;
 
-    public void changeStatus(Long id)throws TaskDeleteException ;
+    /*
+    Execution status the TaskTable
+     */
+    public void changeStatus(Long id) throws TaskDeleteException;
 
 }

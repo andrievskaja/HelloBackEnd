@@ -26,14 +26,27 @@ import javax.persistence.Temporal;
 public class TodoList implements Serializable {
 
     private Long id;
+    /*
+    Name TaskTable
+     */
     private String name = "New TODO";
+      /*
+    End of execution Todo
+     */
     private Date finish;
+       /*
+   List tasks belong to TodoList
+     */
     private List<Task> tasks;
+
+    /*
+    The authorized user 
+     */
     private User user;
 
     public TodoList(Long id) {
         this.id = id;
-      
+
     }
 
     public TodoList() {

@@ -22,8 +22,17 @@ import javax.persistence.ManyToOne;
 public class Task implements Serializable {
 
     private Long id;
+    /*
+    Text the task
+     */
     private String task;
+    /*
+     Execution status the task
+     */
     private boolean done = false;
+     /*
+    Table with tasks
+     */
     private TodoList todoList;
 
     public Task() {
